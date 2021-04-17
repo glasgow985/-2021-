@@ -11,7 +11,7 @@ typedef struct TreeNode {
 } TreeNode, *TreeNodePtr;
 
 typedef struct ListNode {
-    struct TreeNode *node; // ¶ÓÁĞµÄÖµµÄÀàĞÍÊÇÊ÷½ÚµãÖ¸Õë
+    struct TreeNode *node; // é˜Ÿåˆ—çš„å€¼çš„ç±»å‹æ˜¯æ ‘èŠ‚ç‚¹æŒ‡é’ˆ
     struct ListNode *next;
 } ListNode, *ListNodePtr;
 
@@ -21,7 +21,7 @@ typedef struct Queue {
     int size;
 } *QueuePtr;
 
-// ´´½¨Á´±íµÄ½Úµã
+// åˆ›å»ºé“¾è¡¨çš„èŠ‚ç‚¹
 ListNodePtr createListNode(TreeNodePtr node, ListNodePtr next) {
     ListNodePtr curr = (ListNodePtr) (malloc(sizeof(ListNode)));
     curr->node = node;
@@ -29,7 +29,7 @@ ListNodePtr createListNode(TreeNodePtr node, ListNodePtr next) {
     return curr;
 }
 
-// ´´½¨Ê÷µÄ½Úµã
+// åˆ›å»ºæ ‘çš„èŠ‚ç‚¹
 int TreeId = 0;
 
 TreeNodePtr createTreeNode(int val, TreeNodePtr left, TreeNodePtr right) {
@@ -41,7 +41,7 @@ TreeNodePtr createTreeNode(int val, TreeNodePtr left, TreeNodePtr right) {
     return curr;
 }
 
-// µ¥Á´±í¶ÓÁĞ³õÊ¼»¯
+// å•é“¾è¡¨é˜Ÿåˆ—åˆå§‹åŒ–
 QueuePtr InitQueue() {
     QueuePtr queue = (QueuePtr) malloc(sizeof(struct Queue));
     TreeNodePtr dummyTreeNode = createTreeNode(-1, NULL, NULL);
@@ -51,7 +51,7 @@ QueuePtr InitQueue() {
     return queue;
 }
 
-// ÔÚ queue µÄÎ²²¿Ìí¼ÓÒ»¸öÔªËØµÄ¸±±¾
+// åœ¨ queue çš„å°¾éƒ¨æ·»åŠ ä¸€ä¸ªå…ƒç´ çš„å‰¯æœ¬
 void EnQueue(QueuePtr queue, TreeNodePtr node) {
     ListNodePtr curr = createListNode(node, NULL);
     queue->tail->next = curr;
@@ -59,7 +59,7 @@ void EnQueue(QueuePtr queue, TreeNodePtr node) {
     queue->size++;
 }
 
-// É¾³ı queue ÖĞµÄµÚÒ»¸öÔªËØ
+// åˆ é™¤ queue ä¸­çš„ç¬¬ä¸€ä¸ªå…ƒç´ 
 void DeQueue(QueuePtr queue) {
     if (queue->size == 0) {
         perror("error! the size of queue is zero when call DeQueue().");
@@ -72,12 +72,12 @@ void DeQueue(QueuePtr queue) {
     free(head);
 }
 
-// Èç¹û queue ÖĞÃ»ÓĞÔªËØ, ·µ»Ø true
+// å¦‚æœ queue ä¸­æ²¡æœ‰å…ƒç´ , è¿”å› true
 bool QueueEmpty(QueuePtr queue) {
     return queue->size == 0;
 }
 
-// ·µ»Ø queue ÖĞµÚÒ»¸öÔªËØµÄÒıÓÃ
+// è¿”å› queue ä¸­ç¬¬ä¸€ä¸ªå…ƒç´ çš„å¼•ç”¨
 TreeNodePtr GetHead(QueuePtr queue) {
     if (QueueEmpty(queue)) {
         perror("error! the size of queue is zero when call front().");
@@ -91,7 +91,7 @@ int max(int a, int b) {
     return (a >= b) ? a : b;
 }
 
-// ½«ÊäÈë×ª»»ÎªÊı×é
+// å°†è¾“å…¥è½¬æ¢ä¸ºæ•°ç»„
 void getDigits(char *buff, int *data) {
     int len = strlen(buff);
     int index = 0;
@@ -109,43 +109,43 @@ void getDigits(char *buff, int *data) {
     }
 }
 
-// ´´½¨ dot ¿ÉÊÓ»¯ÎÄ¼ş£¬¸ĞĞËÈ¤µÄÍ¬Ñ§¿ÉÒÔÑ§Ï°
+// åˆ›å»º dot å¯è§†åŒ–æ–‡ä»¶ï¼Œæ„Ÿå…´è¶£çš„åŒå­¦å¯ä»¥å­¦ä¹ 
 void createDotFile(const char *filename, TreeNodePtr root, int MaxSize) {
-    FILE *fp = fopen(filename, "w");    // ÎÄ¼şÖ¸Õë
-    if (fp == NULL) {   // ÎªNULLÔò·µ»Ø
+    FILE *fp = fopen(filename, "w");    // æ–‡ä»¶æŒ‡é’ˆ
+    if (fp == NULL) {   // ä¸ºNULLåˆ™è¿”å›
         printf("File cannot open!");
         exit(0);
     }
-    fprintf(fp, "digraph G {\n");   // ¿ªÍ·
-    // ÀûÓÃ²ã´Î±éÀú¹¹Ôì
+    fprintf(fp, "digraph G {\n");   // å¼€å¤´
+    // åˆ©ç”¨å±‚æ¬¡éå†æ„é€ 
     QueuePtr queue = InitQueue();
     EnQueue(queue, root);
     int id = 1;
-    while (!QueueEmpty(queue)) { // Èô¶ÓÁĞ²»¿Õ£¬¼ÌĞø±éÀú¡£·ñÔò£¬±éÀú½áÊø
+    while (!QueueEmpty(queue)) { // è‹¥é˜Ÿåˆ—ä¸ç©ºï¼Œç»§ç»­éå†ã€‚å¦åˆ™ï¼Œéå†ç»“æŸ
         TreeNodePtr curr = GetHead(queue);
         DeQueue(queue);
         if (curr == NULL) continue;
         fprintf(fp, "%d [shape=circle, label=\"%d\"];\n", curr->id, curr->val);
-        if (curr->left != NULL) { // Èç¹ûÓĞ×óº¢×Ó£¬×óº¢×ÓÈë¶Ó
+        if (curr->left != NULL) { // å¦‚æœæœ‰å·¦å­©å­ï¼Œå·¦å­©å­å…¥é˜Ÿ
             EnQueue(queue, curr->left);
             fprintf(fp, "%d->%d;\n", curr->id, curr->left->id);
         }
         id++;
-        // ÖĞ¼äĞéÄâ½Úµã
+        // ä¸­é—´è™šæ‹ŸèŠ‚ç‚¹
         fprintf(fp, "_n%d [shape=circle, label=\"#\", style=invis];\n", id);
         fprintf(fp, "%d->_n%d [style=invis, weight=10];\n", curr->id, id);
-        if (curr->right != NULL) { // Èç¹ûÓĞÓÒº¢×Ó£¬ÓÒº¢×ÓÈë¶Ó
+        if (curr->right != NULL) { // å¦‚æœæœ‰å³å­©å­ï¼Œå³å­©å­å…¥é˜Ÿ
             EnQueue(queue, curr->right);
             fprintf(fp, "%d->%d;\n", curr->id, curr->right->id);
         }
         id++;
     }
-    fprintf(fp, "}\n"); // ½áÎ²
-    fclose(fp); // ¹Ø±ÕIO
+    fprintf(fp, "}\n"); // ç»“å°¾
+    fclose(fp); // å…³é—­IO
 }
 
 
-// »æÖÆ¶ş²æÊ÷Í¼Æ¬,µ÷ÓÃ createDotFile ²¢Ê¹ÓÃ system Ö´ĞĞÃüÁî
+// ç»˜åˆ¶äºŒå‰æ ‘å›¾ç‰‡,è°ƒç”¨ createDotFile å¹¶ä½¿ç”¨ system æ‰§è¡Œå‘½ä»¤
 void plot(TreeNodePtr tree_root, int i, int size, char *name) {
     char tree_filename[50], paint_tree[100];
     sprintf(tree_filename, "./%s_%d.dot", name, i);
@@ -156,7 +156,7 @@ void plot(TreeNodePtr tree_root, int i, int size, char *name) {
 }
 
 
-// É¾³ı¶ş²æÊ÷
+// åˆ é™¤äºŒå‰æ ‘
 void destoryTree(TreeNodePtr root) {
     if (!root) return;
     if (root->left) {
@@ -170,23 +170,29 @@ void destoryTree(TreeNodePtr root) {
     free(root);
 }
 
-/** TODO:  ÈÎÎñÒ»£ºÇëÄãÍ¨¹ı¶ÓÁĞÀ´ÊµÏÖ²ã´Î±éÀú¹¹½¨¶ş²æÊ÷£¬²¢·µ»Ø¶ş²æÊ÷µÄÍ·½áµã */
+/** TODO:  ä»»åŠ¡ä¸€ï¼šè¯·ä½ é€šè¿‡é˜Ÿåˆ—æ¥å®ç°å±‚æ¬¡éå†æ„å»ºäºŒå‰æ ‘ï¼Œå¹¶è¿”å›äºŒå‰æ ‘çš„å¤´ç»“ç‚¹ */
 TreeNodePtr createTreeWithLevelOrder(int *data, int size) {
     TreeNodePtr curr[size+1];
     int i;
+    //è‹¥ä¸ºç©ºæ ‘
     if(data[0]==-1)
         return NULL;
+    //åˆå§‹åŒ–èµ‹å€¼
     for(i=1;i<size+1;i++)
     {
+        //è¾“å…¥ä¸º#ï¼Œæ­¤èŠ‚ç‚¹ç½®ç©º
         if(data[i-1]==-1)
             curr[i]=NULL;
         else
             curr[i]=createTreeNode(data[i-1],NULL,NULL);
     }
+    //å»ºç«‹è”ç³»
     for(i=1;i<=size/2.0;i++)
     {
+        //è‹¥èŠ‚ç‚¹ä¸ºç©ºï¼Œå°†å…¶è·³è¿‡
         if(curr[i]==NULL)
             continue;
+        //curr[2*i]ä¸ºå·¦å­æ ‘ï¼Œcurr[2*i+1]ä¸ºå³å­æ ‘
         curr[i]->left=curr[2*i];
         curr[i]->right=curr[2*i+1];
     }
@@ -195,7 +201,7 @@ TreeNodePtr createTreeWithLevelOrder(int *data, int size) {
 
 /**
  * ================================================
- * ||                  Ç°Ğò±éÀú                   ||
+ * ||                  å‰åºéå†                   ||
  * ================================================
  */
 void preOrderTraverse(TreeNodePtr root) {
@@ -209,7 +215,7 @@ void preOrderTraverse(TreeNodePtr root) {
 
 /**
  * ================================================
- * ||                  ÖĞĞò±éÀú                   ||
+ * ||                  ä¸­åºéå†                   ||
  * ================================================
  */
 void inOrderTraverse(TreeNodePtr root) {
@@ -223,7 +229,7 @@ void inOrderTraverse(TreeNodePtr root) {
 
 /**
  * ================================================
- * ||                  ºóĞò±éÀú                   ||
+ * ||                  ååºéå†                   ||
  * ================================================
  */
 void postOrderTraverse(TreeNodePtr root) {
@@ -235,14 +241,16 @@ void postOrderTraverse(TreeNodePtr root) {
     }
 }
 
-/** TODO: ÈÎÎñ¶ş£ºÇëÄãÍ¨¹ıÉî¶ÈÓÅÏÈ±éÀúÀ´ÇóÈ¡¸Ã¶ş²æÊ÷µÄ×î´óÂ·¾¶ºÍ */
+/** TODO: ä»»åŠ¡äºŒï¼šè¯·ä½ é€šè¿‡æ·±åº¦ä¼˜å…ˆéå†æ¥æ±‚å–è¯¥äºŒå‰æ ‘çš„æœ€å¤§è·¯å¾„å’Œ */
 int maxPathSum(TreeNodePtr root) {
     if(root==NULL)
         return 0;
     else
     {
+        //è‹¥æ­¤èŠ‚ç‚¹ä¸ºå¶å­èŠ‚ç‚¹ï¼Œè¿”å›æ­¤èŠ‚ç‚¹å€¼
         if(root->left==NULL&&root->right==NULL)
             return root->val;
+        //è‹¥ä¸ä¸ºå¶å­èŠ‚ç‚¹ï¼Œåˆ™è¿”å›æ­¤èŠ‚ç‚¹çš„å€¼åŠ ä¸Šå…¶å·¦å³å­æ ‘çš„æœ€å¤§è·¯å¾„å€¼
         else if(maxPathSum(root->left)>=maxPathSum(root->right))
             return root->val+maxPathSum(root->left);
         else if(maxPathSum(root->left)<maxPathSum(root->right))
@@ -250,35 +258,45 @@ int maxPathSum(TreeNodePtr root) {
     }
 }
 
-/** ToDO: ÈÎÎñÈı£ºÇëÄãÍ¨¹ıµİ¹éÇóÈ¡¸Ã¶ş²æÊ÷µÄËùÓĞ×ó×ÓÒ¶È¨ÖØÖ®ºÍ */
+/** ToDO: ä»»åŠ¡ä¸‰ï¼šè¯·ä½ é€šè¿‡é€’å½’æ±‚å–è¯¥äºŒå‰æ ‘çš„æ‰€æœ‰å·¦å­å¶æƒé‡ä¹‹å’Œ */
 int sumOfLeftLeaves(TreeNodePtr root,int sign) {
     int sum=0;
     if(root==NULL)
         return 0;
     else
     {
+        //è‹¥å·¦å³èŠ‚ç‚¹éƒ½ä¸ºç©ºï¼Œè¡¨ç¤ºèŠ‚ç‚¹ä¸ºå¶å­èŠ‚ç‚¹
+        //sign=1è¡¨ç¤ºæ­¤èŠ‚ç‚¹ä¸ºå·¦å¶å­èŠ‚ç‚¹ï¼Œè¿”å›èŠ‚ç‚¹å€¼
         if(root->left==NULL&&root->right==NULL&&sign==1)
             return root->val;
+        //sign=0è¡¨ç¤ºæ­¤èŠ‚ç‚¹ä¸ºå³å¶å­èŠ‚ç‚¹ï¼Œä¸è®¡å…¥ï¼Œè¿”å›0
         else if(root->left==NULL&&root->right==NULL&&sign==0)
             return 0;
+        //è‹¥å·¦èŠ‚ç‚¹ä¸ä¸ºç©ºï¼Œsumç­‰äºsumåŠ ä¸Šå·¦å­æ ‘çš„å·¦å­å¶æƒé‡
         if(root->left!=NULL)
+            //ä¼ é€’1è¡¨ç¤ºä¸‹ä¸ªèŠ‚ç‚¹ä¸ºå·¦èŠ‚ç‚¹
             sum=sum+sumOfLeftLeaves(root->left,1);
+        //è‹¥å³èŠ‚ç‚¹ä¸ä¸ºç©ºï¼Œsumç­‰äºsumåŠ ä¸Šå³å­æ ‘çš„å·¦å­å¶æƒé‡
         if(root->right!=NULL)
+            //ä¼ é€’0è¡¨ç¤ºä¸‹ä¸ªèŠ‚ç‚¹ä¸ºå³èŠ‚ç‚¹
             sum=sum+sumOfLeftLeaves(root->right,0);
         return sum;
     }
 }
 
-/** TODO: ÈÎÎñËÄ£ºÇëÄãÍ¨¹ıµİ¹éÇóÈ¡¸ÃÊ÷µÄ¾µÏñ£¬¼´·­×ª¸Ã¶ş²æÊ÷ */
+/** TODO: ä»»åŠ¡å››ï¼šè¯·ä½ é€šè¿‡é€’å½’æ±‚å–è¯¥æ ‘çš„é•œåƒï¼Œå³ç¿»è½¬è¯¥äºŒå‰æ ‘ */
 TreeNodePtr invertTree(TreeNodePtr root) {
+    //è®¾ç½®ä¸­é—´èŠ‚ç‚¹
     TreeNodePtr t;
     t=createTreeNode(0,NULL,NULL);
     if(root==NULL)
         return NULL;
     else
     {
+        //è‹¥æ­¤èŠ‚ç‚¹ä¸ºå¶å­èŠ‚ç‚¹ï¼Œæ— éœ€æ“ä½œï¼Œç›´æ¥è¿”å›
         if(root->left==NULL&&root->right==NULL)
             return root;
+        //è‹¥æ­¤èŠ‚ç‚¹ä¸ä¸ºå¶å­èŠ‚ç‚¹ï¼Œå¯¹å…¶å·¦å³å­æ ‘è¿›è¡Œç¿»è½¬å‡½æ•°è°ƒç”¨åï¼Œå†ç¿»è½¬å·¦å³å­æ ‘
         else
         {
             invertTree(root->left);
@@ -309,7 +327,7 @@ int main() {
     // printf("Read data...\n");
     FILE *fp = fopen("./test.txt", "r");
     if (!fp) {
-        perror("´ò¿ªÎÄ¼şÊ±·¢Éú´íÎó");
+        perror("æ‰“å¼€æ–‡ä»¶æ—¶å‘ç”Ÿé”™è¯¯");
         return -1;
     } else {
         int i = 0;
@@ -320,9 +338,9 @@ int main() {
          * ===============================================================
          */
         while (fgets(num, MAX_NUM, fp) && fgets(buff, SIZE, fp)) {
-            char *nextline = strchr(buff, '\n');          //²éÕÒ»»ĞĞ·û
-            if (nextline)                            //Èç¹ûfind²»Îª¿ÕÖ¸Õë
-                *nextline = '\0';                    //¾Í°ÑÒ»¸ö¿Õ×Ö·û·ÅÔÚÕâÀï
+            char *nextline = strchr(buff, '\n');          //æŸ¥æ‰¾æ¢è¡Œç¬¦
+            if (nextline)                            //å¦‚æœfindä¸ä¸ºç©ºæŒ‡é’ˆ
+                *nextline = '\0';                    //å°±æŠŠä¸€ä¸ªç©ºå­—ç¬¦æ”¾åœ¨è¿™é‡Œ
             printf("Case %d, data: %s, nodes number: %s", i, buff, num);
             int size = atoi(num);
             int data[size];
@@ -330,11 +348,11 @@ int main() {
 
             /**
              * ===============================================================
-             * ||       ÄãµÄÈÎÎñÔÚÕâÀï£¬µ±È»ÄãÒ²¿ÉÒÔÒÔÈÎÒâ·½Ê½ĞŞ¸Äº¯ÊıµÄÔ­ĞÍ          ||
+             * ||       ä½ çš„ä»»åŠ¡åœ¨è¿™é‡Œï¼Œå½“ç„¶ä½ ä¹Ÿå¯ä»¥ä»¥ä»»æ„æ–¹å¼ä¿®æ”¹å‡½æ•°çš„åŸå‹          ||
              * ===============================================================
              */
 
-            /** ÈÎÎñÒ» */
+            /** ä»»åŠ¡ä¸€ */
             TreeNodePtr tree_root = createTreeWithLevelOrder(data, size);
             printf("Answer for task 1 is: \n");
             printf("preOrderTraverse is:");
@@ -347,26 +365,26 @@ int main() {
             postOrderTraverse(tree_root);
             printf("\n");
 
-            /** Í¨¹ı graphviz ¿ÉÊÓ»¯£¬ÎğÉ¾£¬Öú½Ì²âÊÔÊ¹ÓÃ */
+            /** é€šè¿‡ graphviz å¯è§†åŒ–ï¼Œå‹¿åˆ ï¼ŒåŠ©æ•™æµ‹è¯•ä½¿ç”¨ */
             if (use_graphviz) {
                 plot(tree_root, i, size, "tree");
             }
 
-            /** ÈÎÎñ¶ş */
+            /** ä»»åŠ¡äºŒ */
             int max_path_sum = maxPathSum(tree_root);
             printf("Answer for task 2 is : %d \n", max_path_sum);
 
-            /** ÈÎÎñÈı */
+            /** ä»»åŠ¡ä¸‰ */
             int weight_sum = sumOfLeftLeaves(tree_root,1);
             printf("Answer for task 3 is : %d \n", weight_sum);
 
-            /** ÈÎÎñËÄ */
+            /** ä»»åŠ¡å›› */
             TreeNodePtr invert_tree_root = invertTree(tree_root);
             printf("inOrderTraverse for task 4 is:");
             inOrderTraverse(invert_tree_root);
             printf("\n\n");
 
-            /** Í¨¹ı graphviz ¿ÉÊÓ»¯£¬ÎğÉ¾£¬Öú½Ì²âÊÔÊ¹ÓÃ */
+            /** é€šè¿‡ graphviz å¯è§†åŒ–ï¼Œå‹¿åˆ ï¼ŒåŠ©æ•™æµ‹è¯•ä½¿ç”¨ */
             if (use_graphviz) {
                 plot(invert_tree_root, i, size, "invert_tree");
             }

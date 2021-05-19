@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1621353525 source:d:\program\experiment_4_metro\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+
